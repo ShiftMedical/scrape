@@ -1,10 +1,14 @@
 # scrape
 
-Python Code that uses the Scrapy library to to scrape sites for lead generation.
+Python Code that uses the Scrapy library to to scrape a few websites for lead generation.
 
-
-GETTING STARTED
+DEPENDENCIES
 
 SET UP POSTGRES DATABASE
+- psql -h localhost -d postgres
+- create database scrape;
 
-psql -h localhost -d postgres
+PYTHON MODULES
+- sqlalchemy
+- scrapy
+- psycopg2
