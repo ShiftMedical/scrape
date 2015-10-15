@@ -8,7 +8,7 @@ from scrapy.linkextractors import LinkExtractor
 class MySpider(CrawlSpider):
     name = "glass"
     allowed_domains = ["glassdoor.com"]
-    start_urls = ["http://www.glassdoor.com/Job/jobs.htm?suggestCount=0&suggestChosen=false&clickSource=searchBtn&typedKeyword=per+diem+nurse&sc.keyword=per+diem+nurse&locT=C&locId=1147401"]
+    start_urls = ["http://www.glassdoor.com/Job/san-francisco-per-diem-nurse-jobs-SRCH_IL.0,13_IC1147401_KO14,28.htm"]
 
     BASE_URL = 'http://www.glassdoor.com/'
 
@@ -16,14 +16,14 @@ class MySpider(CrawlSpider):
         return self.parse_func(response)
 
     # RULES THAT DETERMINE WHICH LINKS ARE FOLLOWED ON THE SITE
-    rules = (
-        Rule(LinkExtractor(allow=(), restrict_xpaths=('//a[@class="button next"]',)), callback="parse_func", follow=True),
-    )
+#    rules = (
+#        Rule(LinkExtractor(allow=(), restrict_xpaths=('//a[@class="button next"]',)), callback="parse_func", follow=True),
+#    )
 
     #INITIAL FUNCTION THAT CALLS THE CRAIGSLIST SEARCH PAGE AND PARSES AND ITERATES THROUGH THE RESULTS
     #THIS FUNCTION ALSO USES THE LINK TRAVERSAL RULES TO MOVE THROUGH ALL OF THE RESULTS PAGES
     def parse_func(self, response):
-        links = response.xpath('//a[@class="hdrlnk"]/@href').extract()
+        links = response.xpath('//a[@class="jobLink"]/@href').extract()
         for link in links:
             absolute_url = self.BASE_URL + link
             yield scrapy.Request(absolute_url, callback=self.parse_attr)
