@@ -1,5 +1,18 @@
 # -*- coding: utf-8 -*-
 
+
+# Postgres database settings
+# http://newcoder.io/scrape/part-3/
+
+DATABASE = {
+    'drivername': 'postgres',
+    'host': 'localhost',
+    'port': '5432',
+    'username': 'patrickloerch',
+    'password': '',
+    'database': 'scrape'
+}
+
 # Scrapy settings for craigslist_sample project
 #
 # For simplicity, this file contains only settings considered important or
@@ -61,9 +74,9 @@ NEWSPIDER_MODULE = 'craigslist_sample.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'craigslist_sample.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'craigslist_sample.pipelines.CraigslistSamplePipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

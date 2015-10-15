@@ -15,9 +15,9 @@ class MySpider(CrawlSpider):
     def parse_start_url(self, response):
         return self.parse_func(response)
 
-    rules = (
-        Rule(LinkExtractor(allow=(), restrict_xpaths=('//a[@class="button next"]',)), callback="parse_func", follow=True),
-    )
+#    rules = (
+#        Rule(LinkExtractor(allow=(), restrict_xpaths=('//a[@class="button next"]',)), callback="parse_func", follow=True),
+#    )
 
     #INITIAL FUNCTION THAT CALLS THE CRAIGSLIST SEARCH PAGE AND PARSES AND ITERATES THROUGH THE RESULTS
     #THIS FUNCTION ALSO USES THE LINK TRAVERSAL RULES TO MOVE THROUGH ALL OF THE RESULTS PAGES
@@ -39,12 +39,11 @@ class MySpider(CrawlSpider):
             item["loc"] = "".join(response.xpath("//span[@class='postingtitletext']/small/text()").extract())
             item["title"] = "".join(response.xpath("//span[@class='postingtitletext']//text()").extract())
             item["comp"] = "".join(response.xpath("//p[@class='attrgroup']/span/b/text()").extract()[0])
-            item["job_desc"] = "".join(response.xpath('//section[@id="postingbody"]/text()').extract())
+##            item["job_desc"] = "".join(response.xpath('//section[@id="postingbody"]/text()').extract())
             item["recruiter_notice"] = response.xpath('//ul[@class="notices"]/li[1]/text()').extract()[0]
             item["services_notice"] = response.xpath('//ul[@class="notices"]/li[2]/text()').extract()[0]
             item["job_type"] = response.xpath('//p[@class="attrgroup"]/span[2]/b/text()').extract()[0]
             item["date_created"] = response.xpath('//div[@class="postinginfos"]/p/time/text()')[0].extract()
-            item["data_updated"] = response.xpath('//div[@class="postinginfos"]/p/time/text()')[1].extract()
             item["id"] = response.xpath('//p[@class="postinginfo"][1]/text()').extract()[0]
             return scrapy.Request(url, meta={'item': item}, callback=self.parse_contact)
 
