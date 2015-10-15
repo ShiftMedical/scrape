@@ -19,13 +19,15 @@ class MySpider(CrawlSpider):
         Rule(LinkExtractor(allow=(), restrict_xpaths=('//a[@class="button next"]',)), callback="parse_func", follow=True),
     )
 
+    #INITIAL FUNCTION THAT CALLS THE CRAIGSLIST SEARCH PAGE AND PARSES AND ITERATES THROUGH THE RESULTS
+    #THIS FUNCTION ALSO USES THE LINK TRAVERSAL RULES TO MOVE THROUGH ALL OF THE RESULTS PAGES
     def parse_func(self, response):
         links = response.xpath('//a[@class="hdrlnk"]/@href').extract()
         for link in links:
             absolute_url = self.BASE_URL + link
             yield scrapy.Request(absolute_url, callback=self.parse_attr)
 
-
+    #CALLBACK FUNCTION TO PARSE THE WEBSITE FOR EACH INDIVIDUAL POSTING
     def parse_attr(self, response):
         match = re.search(r"(\w+)\.html", response.url)
         if match:
@@ -49,7 +51,7 @@ class MySpider(CrawlSpider):
             items.append(item)
             return items
 
-
+    ## CALLBACK FUNCTION TO PULL THE E-MAIL ADDRESS FOR EACH POSTING (IF AVAILABLE)
     def parse_contact(self, response):
         item = response.meta['item']
         item["email"] = "".join(response.xpath("//div[@class='anonemail']//text()").extract())
