@@ -1,16 +1,16 @@
 
 import re
 import scrapy
-from craigslist_sample.items import CraigslistItem
+from Glassdoor.items import GlassdoorItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
 class MySpider(CrawlSpider):
-    name = "craig"
-    allowed_domains = ["craigslist.org"]
-    start_urls = ["http://sfbay.craigslist.org/search/hea"]
+    name = "glass"
+    allowed_domains = ["glassdoor.com"]
+    start_urls = ["http://www.glassdoor.com/Job/jobs.htm?suggestCount=0&suggestChosen=false&clickSource=searchBtn&typedKeyword=per+diem+nurse&sc.keyword=per+diem+nurse&locT=C&locId=1147401"]
 
-    BASE_URL = 'http://sfbay.craigslist.org/'
+    BASE_URL = 'http://www.glassdoor.com/'
 
     def parse_start_url(self, response):
         return self.parse_func(response)
@@ -35,7 +35,7 @@ class MySpider(CrawlSpider):
             item_id = match.group(1)
             url = self.BASE_URL + "reply/sfo/hea/" + item_id
 
-            item = CraigslistItem()
+            item = GlassdoorItem()
             item["link"] = response.url
             item["loc"] = "".join(response.xpath("//span[@class='postingtitletext']/small/text()").extract())
             item["title"] = "".join(response.xpath("//span[@class='postingtitletext']//text()").extract())

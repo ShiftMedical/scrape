@@ -22,10 +22,10 @@ DATABASE = {
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'craigslist_sample'
+BOT_NAME = 'glassdoor'
 
-SPIDER_MODULES = ['craigslist_sample.spiders']
-NEWSPIDER_MODULE = 'craigslist_sample.spiders'
+SPIDER_MODULES = ['glassdoor.spiders']
+NEWSPIDER_MODULE = 'glassdoor.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -75,7 +75,7 @@ NEWSPIDER_MODULE = 'craigslist_sample.spiders'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'craigslist_sample.pipelines.CraigslistSamplePipeline': 300,
+    'glassdoor.pipelines.GlassdoorPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
